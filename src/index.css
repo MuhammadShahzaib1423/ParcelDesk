@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { scroll-behavior: smooth; }
+body { background: #FBF8F1; color: #26301F; }
+::selection { background: #CBD5C0; }
+input, select, textarea { outline: none; }
+input:focus, select:focus, textarea:focus { border-color: #6B7F5E !important; box-shadow: 0 0 0 3px rgba(107, 127, 94, 0.18); }
+
+/* Gentle float for the hero floating cards (transform/opacity only). */
+@keyframes pd-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes pd-float-slow {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-7px) rotate(1deg); }
+}
+/* Slow parallax drift for layered background shapes (transform only). */
+@keyframes pd-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(26px, -20px) scale(1.06); }
+}
+@keyframes pd-drift-rev {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-22px, 16px) scale(0.95); }
+}
+.animate-float { animation: pd-float 5s ease-in-out infinite; }
+.animate-float-slow { animation: pd-float-slow 7s ease-in-out infinite; }
+.animate-drift { animation: pd-drift 16s ease-in-out infinite; }
+.animate-drift-rev { animation: pd-drift-rev 19s ease-in-out infinite; }
+
+/* Button lift: subtle rise + shadow on hover, soft press on active. */
+.btn-lift { transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.2s ease; will-change: transform; }
+.btn-lift:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(47, 59, 44, 0.18); }
+.btn-lift:active { transform: translateY(0) scale(0.98); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-float, .animate-float-slow, .animate-drift, .animate-drift-rev { animation: none; }
+  .btn-lift, .btn-lift:hover, .btn-lift:active { transform: none; box-shadow: none; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
