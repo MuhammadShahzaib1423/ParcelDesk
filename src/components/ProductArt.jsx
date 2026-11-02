@@ -66,6 +66,8 @@ export function StatusBadge({ status }) {
     Packed: "bg-violet-100 text-violet-800",
     Shipped: "bg-blue-100 text-blue-800",
     Delivered: "bg-emerald-100 text-emerald-800",
+    "Return in transit": "bg-orange-100 text-orange-800",
+    "Returned to seller": "bg-red-100 text-red-800",
     Returned: "bg-red-100 text-red-800",
     "Expired — not confirmed": "bg-stone-200 text-stone-700",
   };

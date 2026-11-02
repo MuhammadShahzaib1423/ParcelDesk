@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { CITIES, products, formatPKR } from "../data/seed";
+import { CITIES, formatPKR } from "../data/seed";
 import { useShop } from "../store/ShopContext";
 import ProductArt from "../components/ProductArt";
 import {
@@ -16,7 +16,7 @@ const PHONE_RE = /^03\d{2}-?\d{7}$/;
 
 export default function Checkout() {
   const { sellerSlug } = useParams();
-  const { getSeller, cart, setQty, placeOrder, updateOrderStatus, settings, orders } = useShop();
+  const { getSeller, cart, setQty, placeOrder, updateOrderStatus, settings, orders, products } = useShop();
   const seller = getSeller(sellerSlug);
 
   const [form, setForm] = useState({ name: "", phone: "", address: "", city: "", notes: "" });
@@ -158,6 +158,7 @@ export default function Checkout() {
           </div>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link to="/dashboard" className="rounded-full bg-sage-700 px-5 py-2.5 font-semibold text-cream-50 hover:bg-sage-800">See it in the dashboard</Link>
+            <Link to="/track" className="rounded-full border border-sage-300 bg-white px-5 py-2.5 font-semibold text-sage-800">Track this order</Link>
             <Link to={`/shop/${seller.slug}`} className="rounded-full border border-sage-300 bg-white px-5 py-2.5 font-semibold text-sage-800">Back to the shop</Link>
           </div>
         </div>

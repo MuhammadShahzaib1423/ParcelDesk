@@ -8,6 +8,10 @@ import Checkout from "./pages/Checkout";
 import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
 import Pricing from "./pages/Pricing";
+import Track from "./pages/Track";
+import Returns from "./pages/Returns";
+import Products from "./pages/Products";
+import Reports from "./pages/Reports";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -18,7 +22,11 @@ function AnimatedRoutes() {
         <Route path="/" element={<Landing />} />
         <Route path="/shop/:sellerSlug" element={<Shop />} />
         <Route path="/shop/:sellerSlug/checkout" element={<Checkout />} />
+        <Route path="/track" element={<Track />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/returns" element={<Returns />} />
+        <Route path="/dashboard/products" element={<Products />} />
+        <Route path="/dashboard/reports" element={<Reports />} />
         <Route path="/dashboard/settings" element={<Settings />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="*" element={<Navigate to="/" replace />} />
@@ -38,7 +46,11 @@ function AnimatedRoutes() {
           <Route path="/" element={<Landing />} />
           <Route path="/shop/:sellerSlug" element={<Shop />} />
           <Route path="/shop/:sellerSlug/checkout" element={<Checkout />} />
+          <Route path="/track" element={<Track />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/returns" element={<Returns />} />
+          <Route path="/dashboard/products" element={<Products />} />
+          <Route path="/dashboard/reports" element={<Reports />} />
           <Route path="/dashboard/settings" element={<Settings />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="*" element={<Navigate to="/" replace />} />

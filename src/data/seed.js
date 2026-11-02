@@ -20,9 +20,29 @@ export const ORDER_STATUSES = [
   "Packed",
   "Shipped",
   "Delivered",
+  "Return in transit",
+  "Returned to seller",
+  // Legacy alias: older saved orders may still carry "Returned". It is
+  // treated exactly like "Returned to seller" everywhere in stats.
   "Returned",
   "Expired — not confirmed",
 ];
+
+// Statuses that count as a completed return (parcel physically back).
+export const COMPLETED_RETURN_STATUSES = ["Returned to seller", "Returned"];
+// Any status that means the parcel came back or is coming back.
+export const ANY_RETURN_STATUSES = ["Return in transit", "Returned to seller", "Returned"];
+
+export const RETURN_REASONS = [
+  "Refused at door",
+  "Wrong address",
+  "Customer unreachable",
+  "Customer moved",
+  "Damaged parcel",
+  "Other",
+];
+
+export const COURIERS = ["TCS", "Leopards Courier", "M&P", "PostEx", "Daewoo Express", "Other"];
 
 export const sellers = [
   {
@@ -111,6 +131,8 @@ export const defaultSettings = {
   otherCityDelivery: 350,
   confirmationExpiryHours: 12,
   returnFee: 250,
+  defaultCourier: "TCS",
+  announcement: "",
   confirmationMessage:
     "Assalam-o-Alaikum! This is Noor Studio. Please confirm your order of {total} so we can pack and ship it. Reply YES to confirm.",
 };

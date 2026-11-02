@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { CITIES } from "../data/seed";
+import { CITIES, COURIERS } from "../data/seed";
 import { useShop } from "../store/ShopContext";
+import { DashTabs } from "../components/Layout";
 
 export default function Settings() {
   const { settings, setSettings } = useShop();
@@ -21,6 +22,8 @@ export default function Settings() {
       otherCityDelivery: Math.max(0, Number(form.otherCityDelivery) || 0),
       confirmationExpiryHours: Math.min(72, Math.max(1, Number(form.confirmationExpiryHours) || 12)),
       returnFee: Math.max(0, Number(form.returnFee) || 0),
+      defaultCourier: form.defaultCourier || "TCS",
+      announcement: String(form.announcement || "").trim(),
     });
     setSaved(true);
   };
@@ -34,6 +37,7 @@ export default function Settings() {
         the confirmation message customers receive, the confirmation window, and the return fee
         used by the dashboard savings meter. Saving updates the storefront straight away.
       </p>
+      <div className="mt-4"><DashTabs /></div>
 
       <form onSubmit={save} className="mt-6 rounded-3xl border border-cream-200 bg-white p-5 shadow-card sm:p-6">
         <label className="block text-sm font-semibold text-sage-900" htmlFor="s-name">Shop name</label>
@@ -76,6 +80,21 @@ export default function Settings() {
         <label className="mt-4 block text-sm font-semibold text-sage-900" htmlFor="s-msg">Confirmation message</label>
         <textarea id="s-msg" value={form.confirmationMessage} onChange={(e) => set("confirmationMessage", e.target.value)} rows={4} className="mt-1 w-full rounded-2xl border border-cream-300 bg-cream-50 px-4 py-2.5" />
         <p className="mt-1 text-xs text-sage-500">Use {"{total}"} where the order total should appear. This is the message a customer would receive before shipping.</p>
+
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div>
+            <label className="block text-sm font-semibold text-sage-900" htmlFor="s-courier">Default courier</label>
+            <select id="s-courier" value={form.defaultCourier || "TCS"} onChange={(e) => set("defaultCourier", e.target.value)} className="mt-1 w-full rounded-2xl border border-cream-300 bg-cream-50 px-4 py-2.5">
+              {COURIERS.map((c) => <option key={c}>{c}</option>)}
+            </select>
+            <p className="mt-1 text-xs text-sage-500">Pre-filled when recording a return or importing a sheet.</p>
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-sage-900" htmlFor="s-ann">Shop announcement (optional)</label>
+            <input id="s-ann" value={form.announcement || ""} onChange={(e) => set("announcement", e.target.value)} placeholder="e.g. Eid orders close 20 June" className="mt-1 w-full rounded-2xl border border-cream-300 bg-cream-50 px-4 py-2.5" />
+            <p className="mt-1 text-xs text-sage-500">Shown as a banner line on the shop page. Leave empty for no banner.</p>
+          </div>
+        </div>
 
         <button type="submit" className="mt-6 w-full rounded-full bg-sage-700 py-3 font-semibold text-cream-50 hover:bg-sage-800">Save settings</button>
         {saved && (

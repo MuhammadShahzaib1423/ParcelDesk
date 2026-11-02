@@ -42,3 +42,11 @@ input:focus, select:focus, textarea:focus { border-color: #6B7F5E !important; bo
   .btn-lift, .btn-lift:hover, .btn-lift:active { transform: none; box-shadow: none; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
+
+/* Weekly report printing: only the report summary prints, cleanly. */
+@media print {
+  header, footer, nav { display: none !important; }
+  body { background: #fff; }
+  .print\:hidden { display: none !important; }
+  #weekly-report { border: 1px solid #999 !important; box-shadow: none !important; }
+}

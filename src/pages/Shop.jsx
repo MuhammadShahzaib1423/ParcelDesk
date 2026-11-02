@@ -1,14 +1,15 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { products, formatPKR } from "../data/seed";
+import { formatPKR } from "../data/seed";
 import { useShop } from "../store/ShopContext";
 import ProductArt from "../components/ProductArt";
 import { TiltCard } from "../components/motion";
+import { stockLabel } from "../lib/orderInsights";
 
 export default function Shop() {
   const { sellerSlug } = useParams();
-  const { getSeller, cart, addToCart, setQty } = useShop();
+  const { getSeller, cart, addToCart, setQty, productsFor, products, settings } = useShop();
   const navigate = useNavigate();
   const seller = getSeller(sellerSlug);
 
@@ -26,7 +27,7 @@ export default function Shop() {
     );
   }
 
-  const all = products.filter((p) => p.sellerSlug === seller.slug);
+  const all = productsFor(seller.slug);
   const categories = ["All", ...new Set(all.map((p) => p.category))];
 
   const shown = useMemo(() => {
@@ -79,6 +80,13 @@ export default function Shop() {
         <p className="border-t border-cream-200 px-5 py-3 text-sm leading-relaxed text-sage-600 sm:px-7">{seller.about}</p>
       </section>
 
+      {/* Shop announcement from settings */}
+      {settings.announcement && (
+        <p className="mt-4 rounded-2xl bg-gold-400/25 px-4 py-3 text-center text-sm font-medium text-sage-900" role="status">
+          📢 {settings.announcement}
+        </p>
+      )}
+
       {/* Controls */}
       <div id="order" className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
         <input
@@ -113,7 +121,7 @@ export default function Shop() {
                 <div className="relative">
                   <ProductArt motif={p.motif} gradient={p.gradient} />
                   {p.badge && <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-bold text-sage-800">{p.badge}</span>}
-                  <span className="absolute right-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-medium text-sage-700">{p.stock}</span>
+                  <span className="absolute right-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-medium text-sage-700">{stockLabel(p)}</span>
                 </div>
                 <div className="flex flex-1 flex-col p-4">
                   <div className="flex items-start justify-between gap-2">
@@ -125,7 +133,11 @@ export default function Shop() {
                     <span className="font-display text-xl font-bold text-sage-900">{formatPKR(p.price)}</span>
                     {p.oldPrice && <span className="ml-2 text-sm text-sage-500 line-through">{formatPKR(p.oldPrice)}</span>}
                   </p>
-                  {qty === 0 ? (
+                  {p.stockQty <= 0 ? (
+                    <button disabled className="mt-3 w-full cursor-not-allowed rounded-full bg-cream-200 py-2.5 font-semibold text-sage-500">
+                      Out of stock
+                    </button>
+                  ) : qty === 0 ? (
                     <button onClick={() => addToCart(p.id, 1)} className="btn-lift mt-3 w-full rounded-full bg-sage-700 py-2.5 font-semibold text-cream-50 transition hover:bg-sage-800">
                       Add to order
                     </button>

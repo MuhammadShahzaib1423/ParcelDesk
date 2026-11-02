@@ -21,16 +21,32 @@ export function Navbar() {
     `rounded-full px-3.5 py-2 text-sm font-medium transition ${isActive ? "bg-sage-700 text-cream-50" : "text-sage-800 hover:bg-sage-100"}`;
   return (
     <header className="sticky top-0 z-40 border-b border-cream-200 bg-cream-50/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
         <Logo />
-        <nav className="flex items-center gap-1">
+        <nav className="flex flex-wrap items-center gap-1">
           <NavLink to="/" end className={linkCls}>Home</NavLink>
           <NavLink to="/shop/noor-studio" className={linkCls}>Demo shop</NavLink>
+          <NavLink to="/track" className={linkCls}>Track order</NavLink>
           <NavLink to="/dashboard" className={linkCls}>Dashboard</NavLink>
           <NavLink to="/pricing" className={linkCls}>Pricing</NavLink>
         </nav>
       </div>
     </header>
+  );
+}
+
+// Sub-navigation shared by the dashboard pages.
+export function DashTabs() {
+  const linkCls = ({ isActive }) =>
+    `rounded-full px-3.5 py-2 text-sm font-medium transition ${isActive ? "bg-sage-700 text-cream-50" : "text-sage-800 hover:bg-sage-100"}`;
+  return (
+    <nav className="flex flex-wrap gap-1 rounded-full border border-cream-200 bg-white p-1 shadow-card" aria-label="Dashboard sections">
+      <NavLink to="/dashboard" end className={linkCls}>Orders</NavLink>
+      <NavLink to="/dashboard/returns" className={linkCls}>Returns &amp; imports</NavLink>
+      <NavLink to="/dashboard/products" className={linkCls}>Products</NavLink>
+      <NavLink to="/dashboard/reports" className={linkCls}>Reports</NavLink>
+      <NavLink to="/dashboard/settings" className={linkCls}>Settings</NavLink>
+    </nav>
   );
 }
 
